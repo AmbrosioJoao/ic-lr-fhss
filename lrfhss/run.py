@@ -39,7 +39,7 @@ def run_sim(settings: Settings, seed=0):
 
     for n in nodes: 
         
-    #'Vetor delta'    
+    #'Diferença dos deltas'    
         AoI_media += (n.sum_aoi)/(settings.number_nodes) #verificar se é divido por todos os nós ou por 2
                
     print(AoI_media)  
