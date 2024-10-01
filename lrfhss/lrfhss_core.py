@@ -82,6 +82,8 @@ class Node():
         self.final_timestamp = []
         self.diff = 0
         self.sum_aoi = 0
+        self.r_n_1=0
+        self.s_n_1=0
         ######
         
         self.qty_headers=0
@@ -166,6 +168,11 @@ class Node():
                 self.diff = 0
             
             self.sum_aoi += self.diff
+            
+            
+            
+            self.s_n_1=self.packet.AoI_inicial
+            self.r_n_1=self.packet.AoI_final
             
             ######
             
