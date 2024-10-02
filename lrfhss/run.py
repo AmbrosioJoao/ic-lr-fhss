@@ -43,23 +43,26 @@ def run_sim(settings: Settings, seed=0):
         loop=0
         for p in n.final_timestamp:
             
-            
+            H_i_num = 0
             r_n=p
             s_n=n.initial_timestamp[loop]
             ### CALCULA AoI
-            H_i=(r_n-r_n_1)
+            H_i=(r_n-r_n_1)*(r_n_1 - s_n_1) + ((r_n - r_n_1)^2)/2
+            H_i_num += H_i
              
-             
-            if r_n>0
+            if r_n>0:
                 r_n_1=r_n
                 s_n_1=s_n
                 
             loop=loop+1
+    
         
     #'Diferença dos deltas'    
         #AoI_media += (n.sum_aoi)/(settings.number_nodes) #verificar se é divido por todos os nós ou por 2
                
-    print(AoI_media)  
+        
+    H_i_num = H_i_num/(settings.simulation_time)    
+    print(H_i_num)  
     
      #   print(n.id)
      #   print(AoI_inicial)
