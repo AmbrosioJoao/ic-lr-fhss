@@ -80,10 +80,6 @@ class Node():
         #Arrays that store when the packets were generated and when they finish being received
         self.initial_timestamp = []
         self.final_timestamp = []
-        self.diff = 0
-        self.sum_aoi = 0
-        self.r_n_1=0
-        self.s_n_1=0
         ######
         
         self.qty_headers=0
@@ -159,26 +155,8 @@ class Node():
                 self.final_timestamp.append(self.packet.AoI_final)    
                  
             ######
-            
-            
-            ###### Delta vector
-            self.diff = self.packet.AoI_final - self.packet.AoI_inicial
-            
-            if self.diff < 0:
-                self.diff = 0
-            
-            self.sum_aoi += self.diff
-            
-            
-            
-            self.s_n_1=self.packet.AoI_inicial
-            self.r_n_1=self.packet.AoI_final
-            
-            ######
-            
+           
             self.end_of_transmission()
-         
-              
 
 "Represents the gateway, contains information about the fragments and assesses whether this transmission was successful"
 

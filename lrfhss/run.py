@@ -11,10 +11,8 @@ def run_sim(settings: Settings, seed=0):
     
     nodes = []
     packets = []
-    vetor_AoI = []
-    AoI_inicial = []
-    AoI_final = []
-    delta_vector = []
+
+    #####
     AoI_media = 0
     
     for i in range(settings.number_nodes):
@@ -47,7 +45,7 @@ def run_sim(settings: Settings, seed=0):
             r_n=p
             s_n=n.initial_timestamp[loop]
             ### CALCULA AoI
-            H_i=(r_n-r_n_1)*(r_n_1 - s_n_1) + ((r_n - r_n_1)^2)/2
+            H_i=(r_n-r_n_1)*(r_n_1 - s_n_1) + ((r_n - r_n_1)**2)/2
             H_i_num += H_i
              
             if r_n>0:
@@ -55,14 +53,10 @@ def run_sim(settings: Settings, seed=0):
                 s_n_1=s_n
                 
             loop=loop+1
-    
-        
-    #'Diferença dos deltas'    
-        #AoI_media += (n.sum_aoi)/(settings.number_nodes) #verificar se é divido por todos os nós ou por 2
-               
-        
-    H_i_num = H_i_num/(settings.simulation_time)    
-    print(H_i_num)  
+
+
+    AoI_media = H_i_num/(settings.simulation_time)    
+    print(AoI_media)  
     
      #   print(n.id)
      #   print(AoI_inicial)
