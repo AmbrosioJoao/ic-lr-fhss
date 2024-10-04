@@ -15,7 +15,6 @@ class Fragment():
         self.id = id(self) 
         self.collided = [] 
 
-
 "Generates a package structure using the 'Fragment' class."
 
 class Packet():
@@ -28,13 +27,11 @@ class Packet():
         self.channels = random.choices(range(obw), k=headers+payloads)
         self.fragments = []
         
-        
         ######
         #Variables for the calculation of AoI
         self.AoI_inicial= 0
         self.AoI_final = 0
         ######
-        
         
         for h in range(headers):
             self.fragments.append(Fragment('header',header_duration, self.channels[h], self.id))
@@ -108,8 +105,6 @@ class Node():
             self.qty_payloads += self.payloads
             ###### 
             
-            
-            
             ###### Initial AoI
             self.packet.AoI_inicial=env.now
             self.initial_timestamp.append(self.packet.AoI_inicial)
@@ -169,11 +164,6 @@ class Base():
         self.packets_received = {}
         self.threshold = threshold
         
-        
-        
-        
-     
-
     def add_packet(self, packet):
         pass
 
@@ -193,7 +183,6 @@ class Base():
         for f in self.transmitting[fragment.channel]:
             f.collided.append(fragment)
             fragment.collided.append(f)
-
 
     "Attempts to decode the packet according to the fragments that arrived here"
     def try_decode(self,packet,now):

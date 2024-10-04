@@ -39,6 +39,8 @@ def run_sim(settings: Settings, seed=0):
         r_n_1=0
         s_n_1=0
         loop=0
+        
+        #A variável 'p' recebe o timestamp final associado ao pacote 'n'
         for p in n.final_timestamp:
             
             H_i_num = 0
