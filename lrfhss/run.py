@@ -47,7 +47,7 @@ def run_sim(settings: Settings, seed=0):
             r_n=p
             s_n=n.initial_timestamp[loop]
             ### CALCULA AoI
-            H_i=(r_n-r_n_1)*(r_n_1 - s_n_1) + ((r_n - r_n_1)^2)/2
+            H_i=(r_n-r_n_1)*(r_n_1 - s_n_1) + ((r_n - r_n_1)**2)/2
             H_i_num += H_i
              
             if r_n>0:
