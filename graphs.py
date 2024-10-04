@@ -23,7 +23,6 @@ import pandas as pd
 from matplotlib.ticker import EngFormatter
 import scienceplots
 
- 
 "************GRÁFICOS****************"
 #'Pontos' de nós (each simulation takes one different)
 nNodes_points = 20
@@ -41,7 +40,6 @@ nNodes = np.linspace(nNodes_min, nNodes_max, nNodes_points, dtype=int)//8
 loops = 5
 
 start = time.perf_counter()
-
 
 #Vetores de sucesso ajustado, cada gráfico precisa de 3 vetores success e 3 vetores goodput
 success_a1 = []
