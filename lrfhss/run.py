@@ -14,7 +14,7 @@ def run_sim(settings: Settings, seed=0):
 
     #####
     AoI_media = 0
-    
+    AoI_media_teste = 0
     for i in range(settings.number_nodes):
         node = Node(settings.obw, settings.headers, settings.payloads, settings.header_duration, settings.payload_duration, settings.transceiver_wait, settings.traffic_generator)
         bs.add_node(node.id)
@@ -44,12 +44,17 @@ def run_sim(settings: Settings, seed=0):
         for p in n.final_timestamp:
             
             H_i_num = 0
+            H_i_num_teste = 0
             r_n=p
             s_n=n.initial_timestamp[loop]
             ### CALCULA AoI
             H_i=(r_n-r_n_1)*(r_n_1 - s_n_1) + ((r_n - r_n_1)**2)/2
             H_i_num += H_i
              
+            ### TESTE 
+            H_i_teste = ((r_n + r_n_1 - 2*s_n_1)*(r_n - r_n_1))/2
+            H_i_num_teste += H_i_teste
+            
             if r_n>0:
                 r_n_1=r_n
                 s_n_1=s_n
@@ -57,7 +62,10 @@ def run_sim(settings: Settings, seed=0):
             loop=loop+1
 
 
-    AoI_media = H_i_num/(settings.simulation_time)    
+    AoI_media_teste = H_i_num_teste/(settings.simulation_time)
+    AoI_media = H_i_num/(settings.simulation_time) 
+    
+    print(AoI_media_teste)
     print(AoI_media)  
     
      #   print(n.id)
