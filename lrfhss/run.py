@@ -68,17 +68,11 @@ def run_sim(settings: Settings, seed=0):
     print(AoI_media_teste)
     print(AoI_media)  
     
-     #   print(n.id)
-     #   print(AoI_inicial)
-     #   print(AoI_final)
-        
     if transmitted == 0: 
         return 1
     else:    
         return [[success/transmitted], [success*settings.payload_size], [transmitted], [total_headers], [total_payloads]]
         
-        
-
 if __name__ == "__main__":
    s = Settings()
    print(run_sim(s))

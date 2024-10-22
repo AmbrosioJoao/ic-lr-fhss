@@ -16,7 +16,6 @@ class Fragment():
         self.collided = [] 
 
 "Generates a package structure using the 'Fragment' class."
-
 class Packet():
     #
     def __init__(self, node_id, obw, headers, payloads, header_duration, payload_duration):
@@ -47,7 +46,6 @@ class Packet():
 
 
 "The 'abstract' class used by the Node is responsible for returning the transmission interval between packets"
-
 class Traffic(ABC):
     @abstractmethod
     def __init__(self, traffic_param):
@@ -60,7 +58,6 @@ class Traffic(ABC):
 
 "Represents the 'end-devices'; Here there is a 'transmission routine' that will be executed throughout the entire simulation for each device"
 "Generates a new packet to be transported using a 'traffic pattern' -> traffic class; it has the information on how many packets have been transmitted"
-
 class Node():
     def __init__(self, obw, headers, payloads, header_duration, payload_duration, transceiver_wait, traffic_generator):
         self.id = id(self)
@@ -154,7 +151,6 @@ class Node():
             self.end_of_transmission()
 
 "Represents the gateway, contains information about the fragments and assesses whether this transmission was successful"
-
 class Base():
     def __init__(self, obw, threshold):
         self.id = id(self)
