@@ -61,7 +61,7 @@ def run_sim(settings: Settings, seed=0):
                 
             loop=loop+1
 
-
+    #por algum motivo, ao alterar os valores no settings agora ele altera a média do AoI, o que não aconteceu no dia
     AoI_media_teste = H_i_num_teste/(settings.simulation_time)
     AoI_media = H_i_num/(settings.simulation_time) 
     
