@@ -71,7 +71,7 @@ def run_sim(settings: Settings, seed=0):
     if transmitted == 0: 
         return 1
     else:    
-        return [[success/transmitted], [success*settings.payload_size], [transmitted], [total_headers], [total_payloads]]
+        return [[success/transmitted], [success*settings.payload_size], [transmitted], [total_headers], [total_payloads],[AoI_media]]
         
 if __name__ == "__main__":
    s = Settings()
