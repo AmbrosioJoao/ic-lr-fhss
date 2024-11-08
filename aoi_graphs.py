@@ -50,11 +50,11 @@ import matplotlib.pyplot as plt
 #nNodes = np.linspace(nNodes_min, nNodes_max, nNodes_points, dtype=int)//8
 
 
-nHeaders_points = 40
+nHeaders_points = 20
 
 nHeaders_min = 1 
 
-nHeaders_max = 50
+nHeaders_max = 30
 
 nHeaders = np.linspace(nHeaders_min, nHeaders_max, nHeaders_points, dtype=int)
 
@@ -75,8 +75,8 @@ success_c1, goodput_c1, aoI_media_c1 = [], [], []
 for n in nHeaders:
     #Variaveis para cada gráfico 1:
     s_a1 = Settings(headers = n , code = '5/6' )
-    s_b1 = Settings(headers = n , code = '2/3')
-    s_c1 = Settings(headers = n , code = '1/3')
+ #   s_b1 = Settings(headers = n , code = '2/3')
+ #   s_c1 = Settings(headers = n , code = '1/3')
 
   # Resultados do gráfico A:
     results_a1 = Parallel(n_jobs=8)(delayed(run_sim)(s_a1, seed=seed) for seed in range(loops))
@@ -84,8 +84,10 @@ for n in nHeaders:
   # results_c1 = Parallel(n_jobs=8)(delayed(run_sim)(s_c1, seed=seed) for seed in range(loops))
 
     # Ajustar sucessos e AoI_media para o gráfico A:
-    success_a1.append(np.mean(results_a1, 0)[0])
-    goodput_a1.append(np.mean(results_a1, 0)[5] * np.mean(results_a1, 0)[0])
+   
+    success_a1.append(np.mean(results_a1, 0)[5])
+   
+   # goodput_a1.append(np.mean(results_a1, 0)[2] * np.mean(results_a1, 0)[5])
     aoI_media_a1.append(np.mean(results_a1, 0)[5])  # Índice 5 para AoI_media
 
    # teste = (np.mean(results_a1, 0)[5])
@@ -102,7 +104,8 @@ for n in nHeaders:
 print("The simulation lasted {time.perf_counter()-start} seconds.")
 
 #Dataframes
-df_a1 = pd.DataFrame({'Success': success_a1, 'Goodput': goodput_a1, 'AoI Media': aoI_media_a1})
+#df_a1 = pd.DataFrame({'Success': success_a1, 'Goodput': goodput_a1, 'AoI Media': aoI_media_a1})
+df_a1 = pd.DataFrame({'Success': success_a1, 'AoI Media': aoI_media_a1})
 #df_b1 = pd.DataFrame({'Success': success_b1, 'Goodput': goodput_b1, 'AoI Media': aoI_media_b1})
 #df_c1 = pd.DataFrame({'Success': success_c1, 'Goodput': goodput_c1, 'AoI Media': aoI_media_c1})
 
@@ -125,9 +128,10 @@ file.close()
 example_a1 = pd.read_pickle('Curva_A1.data')
 #example_b1 = pd.read_pickle('Curva_B1.data')
 #example_c1 = pd.read_pickle('Curva_C1.data')
-
-
+aoi_media_teste = example_a1['AoI Media']
+product = nHeaders * aoi_media_teste
 f_x = EngFormatter()
+
 
 with plt.style.context(['science', 'ieee', 'no-latex']):
     prop_cycle = plt.rcParams['axes.prop_cycle']
@@ -137,13 +141,16 @@ with plt.style.context(['science', 'ieee', 'no-latex']):
     ax.xaxis.set_major_formatter(f_x)
 
     # Mudança para o eixo x virar headers
-    ax.plot(nHeaders, aoI_media_a1*nHeaders, color='green', label='3 headers')
+    ax.plot(nHeaders, product , color='green', label='3 headers')
  #   ax.plot(nHeaders, aoI_media_b1, color='blue', label='4 headers')
  #   ax.plot(nHeaders, aoI_media_c1, color='red', label='5 headers')
 
     # Limitar o eixo x
-    ax.set_xlim(left=0, right=max(nHeaders))  # Ajuste os valores conforme necessário
+    ax.set_xlim(left=0, right=7)  # Ajuste os valores conforme necessário
 
+    
+    
+    
     leg = ax.legend(loc=3)
     ax.grid(ls='--', color='lightgray')
     ax.autoscale(tight=True)
