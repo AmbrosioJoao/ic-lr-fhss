@@ -80,9 +80,7 @@ for n in nNodes:
     aoI_media_d1 = np.mean(results_d1, 0)[5] # Índice 5 para AoI_media
 
 
-   
-    
-print("The simulation lasted {time.perf_counter()-start} seconds.")
+#print("The simulation lasted {time.perf_counter()-start} seconds.")
 
 #Dataframes
 
@@ -116,14 +114,11 @@ example_c1 = pd.read_pickle('Curva_C1.data')
 example_d1 = pd.read_pickle('Curva_D1.data')
 
 
-
-
 #IMPORTANTE, Ao captar o valor 5 do vetor que o run.py retorna, ele dá um vetor de UMA posição, e o python não admite essa multiplicação de vetores, portanto vou transformar o ultimo valor em int.
 aoi_int_a1 = int(example_a1['AoI Media'])
 aoi_int_b1 = int(example_b1['AoI Media'])
 aoi_int_c1 = int(example_c1['AoI Media'])
 aoi_int_d1 = int(example_d1['AoI Media'])
-
 
 
 f_x = EngFormatter()
@@ -145,10 +140,6 @@ with plt.style.context(['science', 'ieee', 'no-latex']):
     ax.plot(nNodes, nNodes*aoi_int_c1 , color='red', label='5/6 C.R.')
     ax.plot(nNodes, nNodes*aoi_int_d1 , color='magenta', label='1/2 C.R.')    
     
-    
-    
-
- 
     leg = ax.legend(loc='upper left', frameon=True, facecolor='white', framealpha=0.8, edgecolor='black')
     ax.grid(ls='--', color='lightgray')
     ax.autoscale(tight=True)
