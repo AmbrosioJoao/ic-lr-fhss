@@ -204,8 +204,7 @@ with plt.style.context(['science', 'ieee', 'no-latex']):
     plt.tight_layout()
     plt.show()
     plt.close()   
-   
-    
+
 "Plot do gráfico B"   
 example_b1 = pd.read_pickle('grafico_b1.data')
 example_b2 = pd.read_pickle('grafico_b2.data')
