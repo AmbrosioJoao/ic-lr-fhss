@@ -33,13 +33,9 @@ import matplotlib.pyplot as plt
 
 
 
-
-
 "***********AoI*************"
 
-
-
-nHeaders_points = 10
+nHeaders_points = 20
 
 nHeaders_min = 1 
 
@@ -130,11 +126,10 @@ with plt.style.context(['science', 'ieee', 'no-latex']):
     pparam = dict(ylabel='Average AoI Media', xlabel='Number of headers')
     fig, ax = plt.subplots()
     ax.xaxis.set_major_formatter(f_x)
+    
     # Limitar o eixo y
+    ax.set_ylim(0, 700)
 
-    ax.set_ylim(0, 1000)
-
- 
     ax.plot(nNodes, nNodes*aoi_int_a1 , color='green', label='1/3 C.R.')
     ax.plot(nNodes, nNodes*aoi_int_b1 , color='blue', label='2/3 C.R.')
     ax.plot(nNodes, nNodes*aoi_int_c1 , color='red', label='5/6 C.R.')
