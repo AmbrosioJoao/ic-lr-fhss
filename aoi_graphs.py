@@ -35,7 +35,9 @@ import matplotlib.pyplot as plt
 
 "***********AoI*************"
 
-nHeaders_points = 20
+
+#Alterado pois os headers são valores inteiros
+nHeaders_points = 7
 
 nHeaders_min = 1 
 
@@ -132,8 +134,8 @@ with plt.style.context(['science', 'ieee', 'no-latex']):
 
     ax.plot(nNodes, nNodes*aoi_int_a1 , color='green', label='1/3 C.R.')
     ax.plot(nNodes, nNodes*aoi_int_b1 , color='blue', label='2/3 C.R.')
-    ax.plot(nNodes, nNodes*aoi_int_c1 , color='red', label='5/6 C.R.')
-    ax.plot(nNodes, nNodes*aoi_int_d1 , color='magenta', label='1/2 C.R.')    
+    ax.plot(nNodes, nNodes*aoi_int_c1 , color='red', label='1/2 C.R.')
+    ax.plot(nNodes, nNodes*aoi_int_d1 , color='magenta', label='5/6 C.R.')    
     
     leg = ax.legend(loc='upper left', frameon=True, facecolor='white', framealpha=0.8, edgecolor='black')
     ax.grid(ls='--', color='lightgray')
