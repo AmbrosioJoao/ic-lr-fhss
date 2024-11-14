@@ -70,13 +70,12 @@ for n in nNodes:
     results_b1 = Parallel(n_jobs=8)(delayed(run_sim)(s_b1, seed=seed) for seed in range(loops))
     results_c1 = Parallel(n_jobs=8)(delayed(run_sim)(s_c1, seed=seed) for seed in range(loops))
     results_d1 = Parallel(n_jobs=8)(delayed(run_sim)(s_d1, seed=seed) for seed in range(loops))
-
+        
 
     aoI_media_a1 = np.mean(results_a1, 0)[5] # Índice 5 para AoI_media
     aoI_media_b1 = np.mean(results_b1, 0)[5] # Índice 5 para AoI_media
     aoI_media_c1 = np.mean(results_c1, 0)[5] # Índice 5 para AoI_media
     aoI_media_d1 = np.mean(results_d1, 0)[5] # Índice 5 para AoI_media
-
 
 #print("The simulation lasted {time.perf_counter()-start} seconds.")
 
