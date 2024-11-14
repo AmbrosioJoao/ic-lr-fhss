@@ -34,17 +34,20 @@ def run_sim(settings: Settings, seed=0):
     total_headers=sum(n.qty_headers for n in nodes)
     total_payloads=sum(n.qty_payloads for n in nodes)
     ######
-
+    H_i_num = 0
+    
     for n in nodes: 
         r_n_1=0
         s_n_1=0
         loop=0
         
+        #H_i_num = 0
+        
         #A variável 'p' recebe o timestamp final associado ao pacote 'n'
         for p in n.final_timestamp:
             
-            H_i_num = 0
-            H_i_num_teste = 0
+           # H_i_num = 0
+           
             r_n=p
             s_n=n.initial_timestamp[loop]
             ### CALCULA AoI
@@ -58,7 +61,7 @@ def run_sim(settings: Settings, seed=0):
                 
             loop=loop+1
 
-    AoI_media = H_i_num/(settings.simulation_time) 
+    AoI_media = H_i_num/((settings.simulation_time)) 
     
 
     print(AoI_media)  

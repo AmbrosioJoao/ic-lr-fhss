@@ -138,9 +138,10 @@ class Node():
             
             ###### Final AoI
             if bs.try_decode(self.packet,env.now) == True:
-           
-                self.packet.AoI_final=env.now
-                self.final_timestamp.append(self.packet.AoI_final)
+                if self.packet.AoI_final==0:
+                    self.packet.AoI_final=env.now
+                    self.final_timestamp.append(self.packet.AoI_final)
+                
                 
             if bs.try_decode(self.packet,env.now) == False:
                 self.packet.AoI_final=0

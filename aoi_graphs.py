@@ -39,7 +39,7 @@ import matplotlib.pyplot as plt
 #Alterado pois os headers são valores inteiros
 nHeaders_points = 7
 
-nHeaders_min = 0 
+nHeaders_min = 1 
 
 nHeaders_max = 7
 
