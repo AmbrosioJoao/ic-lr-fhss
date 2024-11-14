@@ -39,7 +39,7 @@ import matplotlib.pyplot as plt
 #Alterado pois os headers são valores inteiros
 nHeaders_points = 7
 
-nHeaders_min = 1 
+nHeaders_min = 0 
 
 nHeaders_max = 7
 
@@ -56,6 +56,13 @@ success_b1, aoI_media_b1 = [], []
 success_c1, aoI_media_c1 = [], []
 success_d1, aoI_media_d1 = [], []
 
+
+
+#numeros inteiros para multiplicação
+aoi_int_a1 = 0
+aoi_int_b1 = 0 
+aoi_int_c1 = 0
+aoi_int_d1 = 0
 #Para cada número de nodes_point, roda a simulação "loops" vezes
 
 for n in nNodes:
@@ -71,11 +78,17 @@ for n in nNodes:
     results_c1 = Parallel(n_jobs=8)(delayed(run_sim)(s_c1, seed=seed) for seed in range(loops))
     results_d1 = Parallel(n_jobs=8)(delayed(run_sim)(s_d1, seed=seed) for seed in range(loops))
         
+    
+    
 
     aoI_media_a1 = np.mean(results_a1, 0)[5] # Índice 5 para AoI_media
     aoI_media_b1 = np.mean(results_b1, 0)[5] # Índice 5 para AoI_media
     aoI_media_c1 = np.mean(results_c1, 0)[5] # Índice 5 para AoI_media
     aoI_media_d1 = np.mean(results_d1, 0)[5] # Índice 5 para AoI_media
+
+
+  
+    
 
 #print("The simulation lasted {time.perf_counter()-start} seconds.")
 
@@ -86,7 +99,7 @@ df_b1 = pd.DataFrame({'AoI Media': aoI_media_b1})
 df_c1 = pd.DataFrame({'AoI Media': aoI_media_c1})
 df_d1 = pd.DataFrame({'AoI Media': aoI_media_d1})
 
-#Abertura de arquivos gráfico A
+#Abertura de arquivos gráfico 1
 file = open('Curva_A1.data', 'wb')
 pickle.dump(df_a1, file)
 file.close()
@@ -131,7 +144,7 @@ with plt.style.context(['science', 'ieee', 'no-latex']):
     # Limitar o eixo y
     ax.set_ylim(0, 700)
 
-    ax.plot(nNodes, nNodes*aoi_int_a1 , color='green', label='1/3 C.R.')
+    ax.plot(nNodes, nNodes* aoi_int_a1 , color='green', label='1/3 C.R.')
     ax.plot(nNodes, nNodes*aoi_int_b1 , color='blue', label='2/3 C.R.')
     ax.plot(nNodes, nNodes*aoi_int_c1 , color='red', label='1/2 C.R.')
     ax.plot(nNodes, nNodes*aoi_int_d1 , color='magenta', label='5/6 C.R.')    

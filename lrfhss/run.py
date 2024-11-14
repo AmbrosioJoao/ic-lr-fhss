@@ -14,7 +14,7 @@ def run_sim(settings: Settings, seed=0):
 
     #####
     AoI_media = 0
-    AoI_media_teste = 0
+
     for i in range(settings.number_nodes):
         node = Node(settings.obw, settings.headers, settings.payloads, settings.header_duration, settings.payload_duration, settings.transceiver_wait, settings.traffic_generator)
         bs.add_node(node.id)
@@ -50,22 +50,17 @@ def run_sim(settings: Settings, seed=0):
             ### CALCULA AoI
             H_i=(r_n-r_n_1)*(r_n_1 - s_n_1) + ((r_n - r_n_1)**2)/2
             H_i_num += H_i
-             
-            ### TESTE 
-            H_i_teste = ((r_n + r_n_1 - 2*s_n_1)*(r_n - r_n_1))/2
-            H_i_num_teste += H_i_teste
-            
+
+
             if r_n>0:
                 r_n_1=r_n
                 s_n_1=s_n
                 
             loop=loop+1
 
-    #por algum motivo, ao alterar os valores no settings agora ele altera a média do AoI, o que não aconteceu no dia
-    AoI_media_teste = H_i_num_teste/(settings.simulation_time)
     AoI_media = H_i_num/(settings.simulation_time) 
     
-    print(AoI_media_teste)
+
     print(AoI_media)  
     
     if transmitted == 0: 
