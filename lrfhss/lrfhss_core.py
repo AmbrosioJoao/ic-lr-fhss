@@ -69,7 +69,7 @@ class Node():
         self.payloads = payloads
         self.header_duration = header_duration
         self.payload_duration = payload_duration
-        
+        self.success_quantity = 0
         ######
         #Arrays that store when the packets were generated and when they finish being received
         self.initial_timestamp = []
@@ -141,7 +141,7 @@ class Node():
                 if self.packet.AoI_final==0:
                     self.packet.AoI_final=env.now
                     self.final_timestamp.append(self.packet.AoI_final)
-                
+                    self.success_quantity += 1
                 
             if bs.try_decode(self.packet,env.now) == False:
                 self.packet.AoI_final=0

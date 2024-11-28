@@ -26,6 +26,7 @@ def run_sim(settings: Settings, seed=0):
 
     # after simulation
     success = sum(bs.packets_received.values())
+    success_quantity = sum(n.success_quantity for n in nodes)
     transmitted = sum(n.transmitted for n in nodes)
 
 
@@ -47,29 +48,40 @@ def run_sim(settings: Settings, seed=0):
         for p in n.final_timestamp:
             
            # H_i_num = 0
-           
-            r_n=p
-            s_n=n.initial_timestamp[loop]
+            if(n.final_timestamp != 0 ):   
+                r_n=p
+                s_n=n.initial_timestamp[loop]
             ### CALCULA AoI
-            H_i=(r_n-r_n_1)*(r_n_1 - s_n_1) + ((r_n - r_n_1)**2)/2
-            H_i_num += H_i
+                H_i=(r_n-r_n_1)*(r_n_1 - s_n_1) + ((r_n - r_n_1)**2)/2
+                H_i_num += H_i
 
-
+            if(n.final_timestamp == 0 ):  
+                
+                    H_i = 0
+                    H_i_num += H_i 
+            
             if r_n>0:
-                r_n_1=r_n
-                s_n_1=s_n
+                    r_n_1=r_n
+                    s_n_1=s_n
                 
             loop=loop+1
+                
 
     AoI_media = H_i_num/((settings.simulation_time)) 
     
+    
+    
+    
 
-    print(AoI_media)  
+    print(AoI_media) 
+    print(success_quantity)
+    print(transmitted)
+    
     
     if transmitted == 0: 
         return 1
     else:    
-        return [[success/transmitted], [success*settings.payload_size], [transmitted], [total_headers], [total_payloads],[AoI_media]]
+        return [[success_quantity/transmitted], [success*settings.payload_size], [transmitted], [total_headers], [total_payloads],[AoI_media]]
         
 if __name__ == "__main__":
    s = Settings()
