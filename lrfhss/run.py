@@ -73,9 +73,9 @@ def run_sim(settings: Settings, seed=0):
     
     
 
-    print(AoI_media) 
-    print(success_quantity)
-    print(transmitted)
+  #  print(AoI_media) 
+  #  print(success_quantity)
+  #  print(transmitted)
     
     
     if transmitted == 0: 
