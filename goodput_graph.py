@@ -51,18 +51,14 @@ loops = 5
 start = time.perf_counter()
 
 #Vetores de sucesso ajustado, cada gráfico precisa de 3 vetores success e 3 vetores goodput
-success_ga1, goodput_medio_a1 = [], []
-success_gb1, goodput_medio_b1 = [], []
-success_gc1, goodput_medio_c1 = [], []
-success_gd1, goodput_medio_d1 = [], []
+success_ga1, goodput_a1 = [], []
+success_gb1, goodput_b1 = [], []
+success_gc1, goodput_c1 = [], []
+success_gd1, goodput_d1 = [], []
 
 
 
-#numeros inteiros para multiplicação
-goodput_a1 = 0
-goodput_b1 = 0 
-goodput_c1 = 0
-goodput_d1 = 0
+
 #Para cada número de nodes_point, roda a simulação "loops" vezes
 
 for n in nNodes:
@@ -95,10 +91,10 @@ for n in nNodes:
 
 #Dataframes
 
-dfg_a1 = pd.DataFrame({'GOODPUT': goodput_medio_a1})
-dfg_b1 = pd.DataFrame({'GOODPUT': goodput_medio_b1})
-dfg_c1 = pd.DataFrame({'GOODPUT': goodput_medio_c1})
-dfg_d1 = pd.DataFrame({'GOODPUT': goodput_medio_d1})
+dfg_a1 = pd.DataFrame({'GOODPUT': goodput_a1})
+dfg_b1 = pd.DataFrame({'GOODPUT': goodput_b1})
+dfg_c1 = pd.DataFrame({'GOODPUT': goodput_c1})
+dfg_d1 = pd.DataFrame({'GOODPUT': goodput_d1})
 
 #Abertura de arquivos gráfico 1
 file = open('Goodput_A1.data', 'wb')
@@ -131,12 +127,12 @@ with plt.style.context(['science', 'ieee', 'no-latex']):
     ax.xaxis.set_major_formatter(f_x)
     
     # Limitar o eixo y
-    ax.set_ylim(0, 700)
+    ax.set_ylim(0, 1)
 
-    ax.plot(nNodes, nNodes*goodput_medio_a1 , color='green', label='1/3 C.R.')
-    ax.plot(nNodes, nNodes*goodput_medio_b1 , color='blue', label='2/3 C.R.')
-    ax.plot(nNodes, nNodes*goodput_medio_c1 , color='red', label='1/2 C.R.')
-    ax.plot(nNodes, nNodes*goodput_medio_d1 , color='magenta', label='5/6 C.R.')    
+    ax.plot(nNodes, nNodes*goodput_a1 , color='green', label='1/3 C.R.')
+    ax.plot(nNodes, nNodes*goodput_b1 , color='blue', label='2/3 C.R.')
+    ax.plot(nNodes, nNodes*goodput_c1 , color='red', label='1/2 C.R.')
+    ax.plot(nNodes, nNodes*goodput_d1 , color='magenta', label='5/6 C.R.')    
     
     leg = ax.legend(loc='upper left', frameon=True, facecolor='white', framealpha=0.8, edgecolor='black')
     ax.grid(ls='--', color='lightgray')

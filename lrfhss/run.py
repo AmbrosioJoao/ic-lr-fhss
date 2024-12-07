@@ -67,7 +67,7 @@ def run_sim(settings: Settings, seed=0):
             loop=loop+1
                 
 
-    AoI_media = H_i_num/((settings.simulation_time)) 
+    AoI_media = (H_i_num/((settings.simulation_time))/settings.number_nodes) 
     
     
     
