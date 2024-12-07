@@ -73,7 +73,7 @@ for n in nNodes:
     s_d1 = Settings(headers = n , code = '5/6' )
 
   # Resultados do gráfico A:
-    "IMPORTANTE: return [[success/transmitted], [success*settings.payload_size], [transmitted], [total_headers], [total_payloads],[AoI_media]]"    
+    "IMPORTANTE: return [[success_quantity/transmitted], [success*settings.payload_size], [transmitted], [total_headers], [total_payloads],[AoI_media]]"    
     results_a1 = Parallel(n_jobs=8)(delayed(run_sim)(s_a1, seed=seed) for seed in range(loops))
     results_b1 = Parallel(n_jobs=8)(delayed(run_sim)(s_b1, seed=seed) for seed in range(loops))
     results_c1 = Parallel(n_jobs=8)(delayed(run_sim)(s_c1, seed=seed) for seed in range(loops))
