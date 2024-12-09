@@ -103,8 +103,19 @@ class Node():
             ###### 
             
             ###### Initial AoI
+            
+            ##Verificador 1
+          # if bs.try_decode(self.packet,env.now) == True:
             self.packet.AoI_inicial=env.now
             self.initial_timestamp.append(self.packet.AoI_inicial)
+                
+            ##Verificador 2
+         #  if bs.try_decode(self.packet,env.now) == False:
+             
+            # self.packet.AoI_inicial=0
+            # self.initial_timestamp.append(self.packet.AoI_inicial)
+                
+            
             ###### 
             
             first_payload = 0
@@ -138,12 +149,13 @@ class Node():
             
             ###### Final AoI
             if bs.try_decode(self.packet,env.now) == True:
-                if self.packet.AoI_final==0:
+                #if self.packet.AoI_final==0:
                     self.packet.AoI_final=env.now
                     self.final_timestamp.append(self.packet.AoI_final)
                     self.success_quantity += 1
                 
             if bs.try_decode(self.packet,env.now) == False:
+               
                 self.packet.AoI_final=0
                 self.final_timestamp.append(self.packet.AoI_final)    
                  

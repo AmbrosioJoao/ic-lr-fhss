@@ -38,34 +38,33 @@ def run_sim(settings: Settings, seed=0):
     H_i_num = 0
     
     for n in nodes: 
-        r_n_1=0
-        s_n_1=0
-        loop=0
-        
-        #H_i_num = 0
-        
-        #A variável 'p' recebe o timestamp final associado ao pacote 'n'
-        for p in n.final_timestamp:
-            
-           # H_i_num = 0
-            if(n.final_timestamp != 0 ):   
-                r_n=p
-                s_n=n.initial_timestamp[loop]
-            ### CALCULA AoI
-                H_i=(r_n-r_n_1)*(r_n_1 - s_n_1) + ((r_n - r_n_1)**2)/2
-                H_i_num += H_i
+      r_n_1=0
+      s_n_1=0
+      loop=0
+      
+      #H_i_num = 0
+      
+      #A variável 'p' recebe o timestamp final associado ao pacote 'n'
+      for p in n.final_timestamp:
+          
+         # H_i_num = 0
+          if(n.final_timestamp != 0 ):   
+              r_n=p
+              s_n=n.initial_timestamp[loop]
+          ### CALCULA AoI
+              H_i=(r_n-r_n_1)*(r_n_1 - s_n_1) + ((r_n - r_n_1)**2)/2
+              H_i_num += H_i
 
-            if(n.final_timestamp == 0 ):  
-                
-                    H_i = 0
-                    H_i_num += H_i 
-            
-            if r_n>0:
-                    r_n_1=r_n
-                    s_n_1=s_n
-                
-            loop=loop+1
-                
+          if(n.final_timestamp == 0 ):  
+              
+                  H_i = 0
+                  H_i_num += H_i 
+          
+          if r_n>0:
+                  r_n_1=r_n
+                  s_n_1=s_n
+              
+          loop=loop+1
 
     AoI_media = (H_i_num/((settings.simulation_time))/settings.number_nodes) 
     
