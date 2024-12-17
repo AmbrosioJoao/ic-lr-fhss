@@ -30,11 +30,14 @@ def run_sim(settings: Settings, seed=0):
     transmitted = sum(n.transmitted for n in nodes)
 
 
-    "Deixei comentado pois estava impedindo o funcionamento do código. (pip install -e .)"
+    
     ###### Soma do total de headers/fragmentos transmitidos por todos os nós da rede.
     total_headers=sum(n.qty_headers for n in nodes)
     total_payloads=sum(n.qty_payloads for n in nodes)
     ######
+    
+    
+    ######## Cálculo da AoI ########  
     H_i_num = 0
     
     for n in nodes: 
@@ -68,15 +71,9 @@ def run_sim(settings: Settings, seed=0):
 
     AoI_media = (H_i_num/((settings.simulation_time))/settings.number_nodes) 
     
-    
-    
+    ######## Cálculo da AoI ########  
     
 
-  #  print(AoI_media) 
-  #  print(success_quantity)
-  #  print(transmitted)
-    
-    
     if transmitted == 0: 
         return 1
     else:    

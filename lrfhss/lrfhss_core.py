@@ -105,25 +105,33 @@ class Node():
             ###### Initial AoI
             
             ##Verificador 1
-          # if bs.try_decode(self.packet,env.now) == True:
+           # if bs.try_decode(self.packet,env.now) == True:
             self.packet.AoI_inicial=env.now
             self.initial_timestamp.append(self.packet.AoI_inicial)
                 
             ##Verificador 2
-         #  if bs.try_decode(self.packet,env.now) == False:
+          #  if bs.try_decode(self.packet,env.now) == False:
              
-            # self.packet.AoI_inicial=0
-            # self.initial_timestamp.append(self.packet.AoI_inicial)
-                
-            
-            ###### 
+            #    self.packet.AoI_inicial=0
+            #    self.initial_timestamp.append(self.packet.AoI_inicial)
+
             
             first_payload = 0
-            while next_fragment:
+            self.bool_atualizacao=False #Variavel que so vai se tornar 'True' após o pacote ser decodificado.
+            
+            
+            
+            while next_fragment: #Avança o fragmento
                 
+            
+            
+                
+            
                 if first_payload == 0 and next_fragment.type=='payload': 
                     first_payload=1
                     yield env.timeout(self.transceiver_wait)
+                    
+        
                 next_fragment.timestamp = env.now
 
                 bs.check_collision(next_fragment)
@@ -133,34 +141,34 @@ class Node():
                 yield env.timeout(next_fragment.duration)
        
                 bs.finish_fragment(next_fragment)
- 
+                
+                if bs.try_decode(self.packet,env.now) == True: #Verifica se o pacote foi decodificado
+                
+                     if self.bool_atualizacao==False: #Condição inicial, Exemplo: De 7 fragmentos, 3 são necessários para a decodificação. Mas essa variavel vai impedir de gravar que um 4 fragmento some na AoI 
+                         self.packet.AoI_final=env.now
+                         self.final_timestamp.append(self.packet.AoI_final)
+                         self.success_quantity += 1
+                         self.bool_atualizacao= True
+    
+               
                  
+                #if bs.try_decode(self.packet,env.now) == False:
+                
+                #    if self.bool_atualizacao==True:
+                #        self.packet.AoI_final=0
+                #        self.final_timestamp.append(self.packet.AoI_final)    
                  
-                if self.packet.success == 0:
-                    bs.try_decode(self.packet,env.now)
+                #if self.packet.success == 0:
+                #    bs.try_decode(self.packet,env.now)
                     
                    
-                    
-                
-                next_fragment = self.packet.next()
         
-                 
             #End of the transmission procedure
-            
-            ###### Final AoI
-            if bs.try_decode(self.packet,env.now) == True:
-                #if self.packet.AoI_final==0:
-                    self.packet.AoI_final=env.now
-                    self.final_timestamp.append(self.packet.AoI_final)
-                    self.success_quantity += 1
-                
-            if bs.try_decode(self.packet,env.now) == False:
                
-                self.packet.AoI_final=0
-                self.final_timestamp.append(self.packet.AoI_final)    
-                 
-            ######
-           
+                next_fragment = self.packet.next()
+                
+                
+                
             self.end_of_transmission()
 
 "Represents the gateway, contains information about the fragments and assesses whether this transmission was successful"
