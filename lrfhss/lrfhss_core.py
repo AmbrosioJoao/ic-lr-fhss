@@ -30,6 +30,7 @@ class Packet():
         #Variables for the calculation of AoI
         self.AoI_inicial= 0
         self.AoI_final = 0
+        
         ######
         
         for h in range(headers):
@@ -74,6 +75,7 @@ class Node():
         #Arrays that store when the packets were generated and when they finish being received
         self.initial_timestamp = []
         self.final_timestamp = []
+        self.bool_atualizacao=False    
         ######
         
         self.qty_headers=0
@@ -90,42 +92,38 @@ class Node():
        
 
     def transmit(self, env, bs):
+            
         while 1:
             
             yield env.timeout(self.next_transmission())
             self.transmitted += 1
             bs.add_packet(self.packet)
             next_fragment = self.packet.next()
+            packet = self.packet
 
             ###### When transmitting a packet, include in the variables below the number of headers and fragments transmitted
             self.qty_headers += self.headers
             self.qty_payloads += self.payloads
+            now = env.now
             ###### 
             
             ###### Initial AoI
             
-            ##Verificador 1
-           # if bs.try_decode(self.packet,env.now) == True:
+        
+            self.teste = 0
+            
             self.packet.AoI_inicial=env.now
             self.initial_timestamp.append(self.packet.AoI_inicial)
-                
-            ##Verificador 2
-          #  if bs.try_decode(self.packet,env.now) == False:
-             
-            #    self.packet.AoI_inicial=0
-            #    self.initial_timestamp.append(self.packet.AoI_inicial)
+            
+
+            first_payload = 0
 
             
-            first_payload = 0
-            self.bool_atualizacao=False #Variavel que so vai se tornar 'True' após o pacote ser decodificado.
-            
-            
-            
+             
+           
             while next_fragment: #Avança o fragmento
-                
+                 
             
-            
-                
             
                 if first_payload == 0 and next_fragment.type=='payload': 
                     first_payload=1
@@ -135,42 +133,39 @@ class Node():
                 next_fragment.timestamp = env.now
 
                 bs.check_collision(next_fragment)
-              
                 bs.receive_packet(next_fragment)
-     
+            
+                
+                #########################################################
                 yield env.timeout(next_fragment.duration)
        
                 bs.finish_fragment(next_fragment)
                 
-                if bs.try_decode(self.packet,env.now) == True: #Verifica se o pacote foi decodificado
+                if bs.try_decode(self.packet, now) == True:
                 
-                     if self.bool_atualizacao==False: #Condição inicial, Exemplo: De 7 fragmentos, 3 são necessários para a decodificação. Mas essa variavel vai impedir de gravar que um 4 fragmento some na AoI 
-                         self.packet.AoI_final=env.now
-                         self.final_timestamp.append(self.packet.AoI_final)
-                         self.success_quantity += 1
-                         self.bool_atualizacao= True
-    
-               
-                 
-                #if bs.try_decode(self.packet,env.now) == False:
-                
-                #    if self.bool_atualizacao==True:
-                #        self.packet.AoI_final=0
-                #        self.final_timestamp.append(self.packet.AoI_final)    
-                 
-                #if self.packet.success == 0:
-                #    bs.try_decode(self.packet,env.now)
-                    
-                   
-        
-            #End of the transmission procedure
-               
+                    if self.bool_atualizacao==False: #Condição inicial, Exemplo: De 7 fragmentos, 3 são necessários para a decodificação. Mas essa variavel vai impedir de gravar que um 4 fragmento some na AoI 
+                        self.packet.AoI_final=env.now
+                        self.teste += 1
+                        self.final_timestamp.append(self.packet.AoI_final)
+                        self.success_quantity += 1
+                        self.bool_atualizacao = True
+                                   
+           
+                       
+               ###############################################################        
+                       
+                       
                 next_fragment = self.packet.next()
                 
-                
-                
+               
+               
+                     
+      
             self.end_of_transmission()
-
+            
+            
+            
+            
 "Represents the gateway, contains information about the fragments and assesses whether this transmission was successful"
 class Base():
     def __init__(self, obw, threshold):
@@ -201,15 +196,16 @@ class Base():
             f.collided.append(fragment)
             fragment.collided.append(f)
 
-    "Attempts to decode the packet according to the fragments that arrived here"
     def try_decode(self,packet,now):
+        
         h_success = sum( ((len(f.collided)==0) and f.transmitted==1) if (f.type=='header') else 0 for f in packet.fragments)
         p_success = sum( ((len(f.collided)==0) and f.transmitted==1) if (f.type=='payload') else 0 for f in packet.fragments)
         success = 1 if ((h_success>0) and (p_success >= self.threshold)) else 0
         if success == 1:
 
             self.packets_received[packet.node_id] += 1
-
+ 
+          
             return True
         else:
         

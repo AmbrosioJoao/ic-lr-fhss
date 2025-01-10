@@ -138,7 +138,7 @@ f_x = EngFormatter()
 with plt.style.context(['science', 'ieee', 'no-latex']):
     prop_cycle = plt.rcParams['axes.prop_cycle']
     colors = prop_cycle.by_key()['color']
-    pparam = dict(ylabel='Average AoI Media', xlabel='Number of headers')
+    pparam = dict(ylabel='Average AoI', xlabel='Number of headers')
     fig, ax = plt.subplots()
     ax.xaxis.set_major_formatter(f_x)
     
