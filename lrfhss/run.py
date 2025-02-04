@@ -64,7 +64,7 @@ def run_sim(settings: Settings, seed=0):
         return 1
     else:
         
-        #goodput, ??? , transmitidos, aoi media
+        #sucess rate, goodput , transmitidos, aoi media
         return [[success/transmitted], [success*settings.payload_size], [transmitted], [AoI_media]]
 
     #Get the average success per device, used to plot the CDF 

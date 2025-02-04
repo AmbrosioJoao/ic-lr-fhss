@@ -33,7 +33,7 @@ nNodes_points = 5
 #Mininum amount of nodes
 nNodes_min = 1000
 #Maximum amount of nodes
-nNodes_max = 15000
+nNodes_max = 200000
 #Number of nodes is divided by 8, as we are simulating one of the 8 grid.
 #As they are random selected, it is a very good approximation to consider one of them only, and it decreases the simulation time.
 #In the end, we multiply this array by 8 if we want to consider the technology total capacity.
@@ -44,19 +44,18 @@ loops = 1
 start = time.perf_counter()
 success_case1 = []
 goodput_case1 = []
-AoI_case1 = []
+
 
 success_case2 = []
 goodput_case2 = []
-AoI_case2 = []
+
 
 success_case3 = []
 goodput_case3 = []
-AoI_case3 = []
 
 success_case4 = []
 goodput_case4 = []
-AoI_case4 = []
+
 
 
 
@@ -70,7 +69,7 @@ for n in nNodes:
     #At the moment we only get the network outage probability as results and append the mean of the loops (for better accuracy) to a list.
     success_case1.append(np.mean(results_1,0)[0])
     goodput_case1.append(np.mean(results_1,0)[1])
-    AoI_case1 = (np.mean(results_1,0)[3])
+    
     
     "***********************************"
  
@@ -83,7 +82,7 @@ for n in nNodes:
 
     success_case2.append(np.mean(results_2,0)[0])
     goodput_case2.append(np.mean(results_2,0)[1])
-    AoI_case2 = (np.mean(results_2,0)[3])
+
 
     "***********************************"
  
@@ -96,7 +95,7 @@ for n in nNodes:
 
     success_case3.append(np.mean(results_3,0)[0])
     goodput_case3.append(np.mean(results_3,0)[1])
-    AoI_case3 = (np.mean(results_3,0)[3])
+  
 
     "***********************************"
  
@@ -108,15 +107,14 @@ for n in nNodes:
     #At the moment we only get the network outage probability as results and append the mean of the loops (for better accuracy) to a list.
 
     success_case4.append(np.mean(results_4,0)[0])
-    goodput_case4.append(np.mean(results_4,0)[1])
-    AoI_case4 = (np.mean(results_4,0)[3])    
+    goodput_case4.append(np.mean(results_4,0)[1])    
 
     print(n*8)
 
-print(f"Case 1: Goodput: {goodput_case1} - AoI: {AoI_case1}")
-print(f"Case 2: Goodput: {goodput_case2} - AoI: {AoI_case2}")
-print(f"Case 3: Goodput: {goodput_case3} - AoI: {AoI_case3}")
-print(f"Case 4: Goodput: {goodput_case4} - AoI: {AoI_case4}")
+print(f"Case 1: Goodput: {goodput_case1} ")
+print(f"Case 2: Goodput: {goodput_case2} ")
+print(f"Case 3: Goodput: {goodput_case3} ")
+print(f"Case 4: Goodput: {goodput_case4} ")
 
 
 print(f"The simulation lasted {time.perf_counter()-start} seconds.")
@@ -127,16 +125,16 @@ f_x = EngFormatter()
 with plt.style.context(['science', 'ieee', 'no-latex']):
     prop_cycle = plt.rcParams['axes.prop_cycle']
     colors = prop_cycle.by_key()['color']
-    pparam = dict(ylabel='Average AoI', xlabel='Number of nodes')
+    pparam = dict(ylabel='Goodput', xlabel='Number of nodes')
     fig, ax = plt.subplots()
     ax.xaxis.set_major_formatter(f_x)
     
-    ax.plot(nNodes, (nNodes*(AoI_case1))/1000000, color='green', label='1/3 C.R.')
-    ax.plot(nNodes, (nNodes*(AoI_case2))/1000000, color='blue', label='1/2 C.R.')
-    ax.plot(nNodes, (nNodes*(AoI_case3))/1000000 , color='red', label='2/3 C.R.')
-    ax.plot(nNodes, (nNodes*(AoI_case4))/1000000, color='magenta', label='5/6 C.R.')    
+    ax.plot(8*nNodes, goodput_case1, color='green', label='1/3 C.R.')
+    ax.plot(8*nNodes, goodput_case2, color='blue', label='1/2 C.R.')
+    ax.plot(8*nNodes, goodput_case3 , color='red', label='2/3 C.R.')
+    ax.plot(8*nNodes, goodput_case4, color='magenta', label='5/6 C.R.')    
     
-    leg = ax.legend(loc='upper left', frameon=True, facecolor='white', framealpha=0.8, edgecolor='black')
+    leg = ax.legend(loc='upper right', frameon=True, facecolor='white', framealpha=0.8, edgecolor='black')
     ax.grid(ls='--', color='lightgray')
     ax.autoscale(tight=True)
     ax.set(**pparam)
