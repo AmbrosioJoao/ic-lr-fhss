@@ -70,7 +70,7 @@ for n in nNodes:
     #At the moment we only get the network outage probability as results and append the mean of the loops (for better accuracy) to a list.
     success_case1.append(np.mean(results_1,0)[0])
     goodput_case1.append(np.mean(results_1,0)[2]*np.mean(results_1,0)[0])
-    AoI_case1.append(np.mean(results_1,0)[3])
+    AoI_case1 = (np.mean(results_1,0)[3])
     
     "***********************************"
  
@@ -83,7 +83,7 @@ for n in nNodes:
 
     success_case2.append(np.mean(results_2,0)[0])
     goodput_case2.append(np.mean(results_2,0)[2]*np.mean(results_2,0)[0])
-    AoI_case2.append(np.mean(results_2,0)[3])
+    AoI_case2 = (np.mean(results_2,0)[3])
 
     "***********************************"
  
@@ -96,7 +96,7 @@ for n in nNodes:
 
     success_case3.append(np.mean(results_3,0)[0])
     goodput_case3.append(np.mean(results_3,0)[2]*np.mean(results_3,0)[0])
-    AoI_case3.append(np.mean(results_3,0)[3])
+    AoI_case3 = (np.mean(results_3,0)[3])
 
     "***********************************"
  
@@ -109,14 +109,9 @@ for n in nNodes:
 
     success_case4.append(np.mean(results_4,0)[0])
     goodput_case4.append(np.mean(results_4,0)[2]*np.mean(results_4,0)[0])
-    AoI_case4.append(np.mean(results_4,0)[3])    
-
-
-
-
+    AoI_case4 = (np.mean(results_4,0)[3])    
 
     print(n*8)
-
 
 print(f"Case 1: Goodput: {goodput_case1} - AoI: {AoI_case1}")
 print(f"Case 2: Goodput: {goodput_case2} - AoI: {AoI_case2}")
@@ -125,46 +120,6 @@ print(f"Case 4: Goodput: {goodput_case4} - AoI: {AoI_case4}")
 
 
 print(f"The simulation lasted {time.perf_counter()-start} seconds.")
-
-#Saving results on a file
-df_1 = pd.DataFrame({'Average AoI': AoI_case1}, index = nNodes)
-file = open('example_case1.data', 'wb')
-pickle.dump(df_1, file)
-file.close()
-
-#Saving results on a file
-df_2 = pd.DataFrame({'Average AoI': AoI_case2}, index = nNodes)
-file = open('example_case2.data', 'wb')
-pickle.dump(df_2, file)
-file.close()
-
-#Saving results on a file
-df_3 = pd.DataFrame({'Average AoI': AoI_case3}, index = nNodes)
-file = open('example_case3.data', 'wb')
-pickle.dump(df_3, file)
-file.close()
-
-#Saving results on a file
-df_4 = pd.DataFrame({'Average AoI': AoI_case4}, index = nNodes)
-file = open('example_case4.data', 'wb')
-pickle.dump(df_4, file)
-file.close()
-
-
-"Plot do gráfico 1"   
-example_1 = pd.read_pickle('example_case1.data')
-example_2 = pd.read_pickle('example_case2.data')
-example_3 = pd.read_pickle('example_case3.data')
-example_4 = pd.read_pickle('example_case4.data')
-
-
-#IMPORTANTE, como são listas, pesquisei como obter somente o último resultado dos appends realizados
-aoi_int_1 = example_1['Average AoI'].tolist()[-1]
-aoi_int_2 = example_2['Average AoI'].tolist()[-1] 
-aoi_int_3 = example_3['Average AoI'].tolist()[-1]
-aoi_int_4 = example_4['Average AoI'].tolist()[-1]
-
-
 
 f_x = EngFormatter()
 
@@ -176,10 +131,10 @@ with plt.style.context(['science', 'ieee', 'no-latex']):
     fig, ax = plt.subplots()
     ax.xaxis.set_major_formatter(f_x)
     
-    ax.plot(nNodes/1000000, (nNodes* aoi_int_1)/1000000 , color='green', label='1/3 C.R.')
-    ax.plot(nNodes/1000000, (nNodes*aoi_int_2)/1000000 , color='blue', label='1/2 C.R.')
-    ax.plot(nNodes/1000000, (nNodes*aoi_int_3)/1000000 , color='red', label='2/3 C.R.')
-    ax.plot(nNodes/1000000, (nNodes*aoi_int_4)/1000000 , color='magenta', label='5/6 C.R.')    
+    ax.plot(nNodes, (nNodes*(AoI_case1))/1000000, color='green', label='1/3 C.R.')
+    ax.plot(nNodes, (nNodes*(AoI_case2))/1000000, color='blue', label='1/2 C.R.')
+    ax.plot(nNodes, (nNodes*(AoI_case3))/1000000 , color='red', label='2/3 C.R.')
+    ax.plot(nNodes, (nNodes*(AoI_case4))/1000000, color='magenta', label='5/6 C.R.')    
     
     leg = ax.legend(loc='upper left', frameon=True, facecolor='white', framealpha=0.8, edgecolor='black')
     ax.grid(ls='--', color='lightgray')
