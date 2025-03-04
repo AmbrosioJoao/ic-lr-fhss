@@ -39,9 +39,9 @@ marcadores = ['o', 's', '^', 'd', 'x']  # Diferentes tipos de marcadores
 
 
 #Number of different number of nodes points (each simulation takes one different)
-nNodes_points = 5
+nNodes_points = 3
 #Mininum amount of nodes
-nNodes_min = 0
+nNodes_min = 4
 
 #Maximum amount of nodes
 nNodes_max = 20#7 payload sizes
@@ -72,53 +72,52 @@ goodput_case4 = []
 #For each number of nodes point, run the simulation "loops" times
 for n in nNodes:
     #For each nNodes, create a new settings object with the proper input parameter
-    s = Settings(number_nodes = 100000, code = '1/3', payload_size = n)
+    s = Settings(number_nodes = 50000, code = '1/3', payload_size = n)
     #This line runs the simulation loops in paralel, using n_jobs as the number of threads generated.
     #Consider using a number according to the amount of reseources available to your machine to avoid crashing your system.
     results_1 = Parallel(n_jobs=8) (delayed(run_sim)(s, seed = seed) for seed in range(0,loops))
     #At the moment we only get the network outage probability as results and append the mean of the loops (for better accuracy) to a list.
     success_case1.append(np.mean(results_1,0)[0])
-    goodput_case1.append(np.mean(results_1,0)[1])
+    goodput_case1.append((np.mean(results_1,0)[1])*10)
     
     
     "***********************************"
  
     #For each nNodes, create a new settings object with the proper input parameter
-    s = Settings(number_nodes = 100000, code = '1/2', payload_size = n)
+    s = Settings(number_nodes = 50000, code = '1/2', payload_size = n)
     #This line runs the simulation loops in paralel, using n_jobs as the number of threads generated.
     #Consider using a number according to the amount of reseources available to your machine to avoid crashing your system.
     results_2 = Parallel(n_jobs=8) (delayed(run_sim)(s, seed = seed) for seed in range(0,loops))
     #At the moment we only get the network outage probability as results and append the mean of the loops (for better accuracy) to a list.
 
     success_case2.append(np.mean(results_2,0)[0])
-    goodput_case2.append(np.mean(results_2,0)[1])
+    goodput_case2.append((np.mean(results_2,0)[1])*10)
 
 
     "***********************************"
  
     #For each nNodes, create a new settings object with the proper input parameter
-    s = Settings(number_nodes = 100000, code = '2/3', payload_size = n)
+    s = Settings(number_nodes = 50000, code = '2/3', payload_size = n)
     #This line runs the simulation loops in paralel, using n_jobs as the number of threads generated.
     #Consider using a number according to the amount of reseources available to your machine to avoid crashing your system.
     results_3 = Parallel(n_jobs=8) (delayed(run_sim)(s, seed = seed) for seed in range(0,loops))
     #At the moment we only get the network outage probability as results and append the mean of the loops (for better accuracy) to a list.
 
     success_case3.append(np.mean(results_3,0)[0])
-    goodput_case3.append(np.mean(results_3,0)[1])
+    goodput_case3.append((np.mean(results_3,0)[1])*10)
   
 
     "***********************************"
  
     #For each nNodes, create a new settings object with the proper input parameter
-    s = Settings(number_nodes = 100000, code = '5/6', payload_size = n)
+    s = Settings(number_nodes = 50000, code = '5/6', payload_size = n)
     #This line runs the simulation loops in paralel, using n_jobs as the number of threads generated.
     #Consider using a number according to the amount of reseources available to your machine to avoid crashing your system.
     results_4 = Parallel(n_jobs=8) (delayed(run_sim)(s, seed = seed) for seed in range(0,loops))
     #At the moment we only get the network outage probability as results and append the mean of the loops (for better accuracy) to a list.
 
     success_case4.append(np.mean(results_4,0)[0])
-    goodput_case4.append(np.mean(results_4,0)[1])    
-    
+    goodput_case4.append((np.mean(results_4,0)[1])*10)
 
 
     print(n*8)
@@ -156,14 +155,14 @@ with plt.style.context(['science', 'ieee', 'no-latex']):
    
 
     # Melhorias visuais
-    leg = ax.legend(loc='upper right', frameon=True, facecolor='white', framealpha=0.8, edgecolor='black')
+    leg = ax.legend(loc='upper left', frameon=True, facecolor='white', framealpha=0.8, edgecolor='black')
     ax.grid(ls='--', color='lightgray', alpha=0.6)
     ax.autoscale(tight=True)
     ax.set(**pparam)
     ax.set_ylim(bottom=0)  # Ajuste conforme necessário
 
     # Título com um tamanho maior
-    ax.set_title('Goodput varying the payload size (Fixed 100k Nodes)', fontsize=12, fontweight='bold')
+    ax.set_title('Goodput varying the payload size (Fixed 50k Nodes)', fontsize=12, fontweight='bold')
 
     plt.tight_layout()
     plt.show()
