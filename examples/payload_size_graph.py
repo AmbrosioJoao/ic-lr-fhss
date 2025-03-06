@@ -125,7 +125,7 @@ print(f"Case 1: Goodput: {goodput_case1} ")
 print(f"Case 2: Goodput: {goodput_case2} ")
 print(f"Case 3: Goodput: {goodput_case3} ")
 print(f"Case 4: Goodput: {goodput_case4} ")
-print(f"Case 4: Goodput: {goodput_case5} ")
+#print(f"Case 5: Goodput: {goodput_case5} ")
 
 
 print(f"The simulation lasted {time.perf_counter()-start} seconds.")
