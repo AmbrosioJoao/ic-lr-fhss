@@ -135,7 +135,7 @@ f_x = EngFormatter()
 
 
 with plt.style.context(['science', 'ieee', 'no-latex']):
-    pparam = dict(ylabel='Goodput', xlabel='Number of nodes')
+    pparam = dict(ylabel='Goodput', xlabel='Numero de dispositivos')
     fig, ax = plt.subplots()
 
     # Adicionando curvas com diferentes estilos e cores, ajustando tamanho e espaçamento dos marcadores
@@ -162,7 +162,7 @@ with plt.style.context(['science', 'ieee', 'no-latex']):
     ax.set_ylim(bottom=0)  # Ajuste conforme necessário
 
     # Título com um tamanho maior
-    ax.set_title('Goodput varying the payload size (1/3 C.R.)', fontsize=12, fontweight='bold')
+    ax.set_title('Goodput variando Payload Size (1/3 C.R.)', fontsize=12, fontweight='bold')
 
     plt.tight_layout()
     plt.show()

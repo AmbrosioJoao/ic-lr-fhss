@@ -55,6 +55,9 @@ plt.bar(courses, valores_toa , color ='green', width = 700)
 
 plt.xlabel("Dispositivos")
 plt.ylabel("TOA")
+plt.title("ToA Vs Número de dispostivos")
+
+
 
 plt.show()
 

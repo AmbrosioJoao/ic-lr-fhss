@@ -24,6 +24,10 @@ import scienceplots
 #Quarta Curva (D):
     #Fixado: 5/6 de taxa 
     
+    
+estilos = ['-', '--', '-.', ':', (0, (3, 5, 1, 5))]  # Diferentes estilos de linha
+cores = ['blue', 'green', 'red', 'orange', 'magenta']  # Cores para cada curva
+marcadores = ['o', 's', '^', 'd', 'x']  # Diferentes tipos de marcadores
 #ORDENADO DO MENOR PARA O MAIOR AOI
 "***************************"
 
@@ -125,15 +129,24 @@ f_x = EngFormatter()
 with plt.style.context(['science', 'ieee', 'no-latex']):
     prop_cycle = plt.rcParams['axes.prop_cycle']
     colors = prop_cycle.by_key()['color']
-    pparam = dict(ylabel='Goodput', xlabel='Number of nodes')
+    pparam = dict(ylabel='Goodput', xlabel='Numero de dispositivos')
     fig, ax = plt.subplots()
     ax.xaxis.set_major_formatter(f_x)
     
-    ax.plot(8*nNodes, goodput_case1, color='green', label='1/3 C.R.')
-    ax.plot(8*nNodes, goodput_case2, color='blue', label='1/2 C.R.')
-    ax.plot(8*nNodes, goodput_case3 , color='red', label='2/3 C.R.')
-    ax.plot(8*nNodes, goodput_case4, color='magenta', label='5/6 C.R.')    
     
+    ax.plot(8*nNodes, goodput_case2, linestyle=estilos[0], color=cores[0], marker=marcadores[0], 
+            markersize=2, markevery=4, label='1/2 C.R.')
+    ax.plot(8*nNodes, goodput_case1, linestyle=estilos[1], color=cores[1], marker=marcadores[1], 
+            markersize=2, markevery=4, label='1/3 C.R.')
+    
+    ax.plot(8*nNodes, goodput_case3 , linestyle=estilos[2], color=cores[2], marker=marcadores[2], 
+            markersize=2, markevery=4, label='2/3 C.R.')
+    ax.plot(8*nNodes, goodput_case4, linestyle=estilos[3], color=cores[3], marker=marcadores[3], 
+            markersize=2, markevery=4, label='5/6 C.R.')    
+    
+    
+    ax.set_title('Goodput com diferentes Coding Rates', fontsize=8, fontweight='bold')
+
     leg = ax.legend(loc='upper right', frameon=True, facecolor='white', framealpha=0.8, edgecolor='black')
     ax.grid(ls='--', color='lightgray')
     ax.autoscale(tight=True)

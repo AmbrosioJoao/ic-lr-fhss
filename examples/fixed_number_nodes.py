@@ -39,7 +39,7 @@ marcadores = ['o', 's', '^', 'd', 'x']  # Diferentes tipos de marcadores
 
 
 #Number of different number of nodes points (each simulation takes one different)
-nNodes_points = 10
+nNodes_points = 20
 #Mininum amount of nodes
 nNodes_min = 32 # 8*4 P.S
 
@@ -162,7 +162,7 @@ with plt.style.context(['science', 'ieee', 'no-latex']):
     ax.set_ylim(bottom=0)  # Ajuste conforme necessário
 
     # Título com um tamanho maior
-    ax.set_title('Goodput varying the payload size (Fixed 50k Nodes)', fontsize=12, fontweight='bold')
+    ax.set_title('Goodput variando o payload size (Fixado em 50k de dispositivos)', fontsize=12, fontweight='bold')
 
     plt.tight_layout()
     plt.show()

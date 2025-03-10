@@ -25,11 +25,18 @@ import scienceplots
     #Fixado: 5/6 de taxa 
     
 #ORDENADO DO MENOR PARA O MAIOR AOI
+
+estilos = ['-', '--', '-.', ':', (0, (3, 5, 1, 5))]  # Diferentes estilos de linha
+cores = ['blue', 'green', 'red', 'orange', 'magenta']  # Cores para cada curva
+marcadores = ['o', 's', '^', 'd', 'x']  # Diferentes tipos de marcadores
+
+
+
 "***************************"
 
 
 #Number of different number of nodes points (each simulation takes one different)
-nNodes_points = 5
+nNodes_points = 20
 #Mininum amount of nodes
 nNodes_min = 1000
 #Maximum amount of nodes
@@ -127,14 +134,23 @@ f_x = EngFormatter()
 with plt.style.context(['science', 'ieee', 'no-latex']):
     prop_cycle = plt.rcParams['axes.prop_cycle']
     colors = prop_cycle.by_key()['color']
-    pparam = dict(ylabel='Average AoI', xlabel='Number of nodes')
+    pparam = dict(ylabel='AoI média', xlabel='Numero de dispostivos')
     fig, ax = plt.subplots()
     ax.xaxis.set_major_formatter(f_x)
     
-    ax.plot(nNodes, (nNodes*(AoI_case1))/1000000, color='green', label='1/3 C.R.')
-    ax.plot(nNodes, (nNodes*(AoI_case2))/1000000, color='blue', label='1/2 C.R.')
-    ax.plot(nNodes, (nNodes*(AoI_case3))/1000000 , color='red', label='2/3 C.R.')
-    ax.plot(nNodes, (nNodes*(AoI_case4))/1000000, color='magenta', label='5/6 C.R.')    
+    
+    ax.set_title('AoI em diversos Coding Rates', fontsize=8, fontweight='bold')
+
+
+    ax.plot(nNodes, (nNodes*(AoI_case2))/1000000, linestyle=estilos[0], color=cores[0], marker=marcadores[0], 
+             markersize=1, markevery=2, label='1/2 C.R.')
+    ax.plot(nNodes, (nNodes*(AoI_case1))/1000000,linestyle=estilos[1], color=cores[1], marker=marcadores[1], 
+            markersize=1, markevery=2, label='1/3 C.R.')
+   
+    ax.plot(nNodes, (nNodes*(AoI_case3))/1000000 , linestyle=estilos[2], color=cores[2], marker=marcadores[2], 
+            markersize=1, markevery=2, label='2/3 C.R.')
+    ax.plot(nNodes, (nNodes*(AoI_case4))/1000000, linestyle=estilos[3], color=cores[3], marker=marcadores[3], 
+            markersize=1, markevery=2, label='5/6 C.R.')    
     
     leg = ax.legend(loc='upper left', frameon=True, facecolor='white', framealpha=0.8, edgecolor='black')
     ax.grid(ls='--', color='lightgray')
