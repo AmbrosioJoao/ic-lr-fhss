@@ -12,6 +12,8 @@ import pandas as pd
 from matplotlib.ticker import EngFormatter
 import scienceplots
 import matplotlib.pyplot as plt 
+import matplotlib as mpl
+mpl.rcParams.update(mpl.rcParamsDefault)
 
 "***********TOA***************"
 def toa(settings: Settings, seed=0):
@@ -20,6 +22,7 @@ def toa(settings: Settings, seed=0):
     headers_time = settings.headers
     payloads_time = settings.payloads
     toa = (headers_time*settings.header_duration + payloads_time*settings.payload_duration)
+    
     
     return toa
 
@@ -50,12 +53,13 @@ courses = list(nNodes)
 values = list(nNodes)
 
 valores_toa = [value * toa_sim for value in values]
-
+plt.gca().xaxis.set_major_formatter(EngFormatter(unit='', places=0))
+plt.gca().yaxis.set_major_formatter(EngFormatter(unit='', places=0))
 plt.bar(courses, valores_toa , color ='green', width = 700)
 
 plt.xlabel("Dispositivos")
-plt.ylabel("TOA")
-plt.title("ToA Vs Número de dispostivos")
+plt.ylabel("ToA")
+
 
 
 
