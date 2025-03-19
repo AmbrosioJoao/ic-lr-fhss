@@ -135,17 +135,18 @@ with plt.style.context(['science', 'ieee', 'no-latex']):
     
     
     ax.plot(8*nNodes, goodput_case2, linestyle=estilos[0], color=cores[0], marker=marcadores[0], 
-            markersize=2, markevery=4, label='1/2 C.R.')
+            markersize=4, markevery=4, label='1/2 C.R.')
     ax.plot(8*nNodes, goodput_case1, linestyle=estilos[1], color=cores[1], marker=marcadores[1], 
-            markersize=2, markevery=4, label='1/3 C.R.')
+            markersize=4, markevery=4, label='1/3 C.R.')
     
     ax.plot(8*nNodes, goodput_case3 , linestyle=estilos[2], color=cores[2], marker=marcadores[2], 
-            markersize=2, markevery=4, label='2/3 C.R.')
+            markersize=4, markevery=4, label='2/3 C.R.')
     ax.plot(8*nNodes, goodput_case4, linestyle=estilos[3], color=cores[3], marker=marcadores[3], 
-            markersize=2, markevery=4, label='5/6 C.R.')    
+            markersize=4, markevery=4, label='5/6 C.R.')    
     
-    
-    ax.set_title('Goodput com diferentes Coding Rates', fontsize=8, fontweight='bold')
+    plt.gca().xaxis.set_major_formatter(EngFormatter(unit='', places=0))
+    plt.gca().yaxis.set_major_formatter(EngFormatter(unit='', places=0))
+    #ax.set_title('Goodput com diferentes Coding Rates', fontsize=8, fontweight='bold')
 
     leg = ax.legend(loc='upper right', frameon=True, facecolor='white', framealpha=0.8, edgecolor='black')
     ax.grid(ls='--', color='lightgray')

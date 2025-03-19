@@ -134,13 +134,12 @@ f_x = EngFormatter()
 with plt.style.context(['science', 'ieee', 'no-latex']):
     prop_cycle = plt.rcParams['axes.prop_cycle']
     colors = prop_cycle.by_key()['color']
-    pparam = dict(ylabel='AoI média', xlabel='Numero de dispostivos')
+    pparam = dict(ylabel='AoI media', xlabel='Numero de dispostivos')
     fig, ax = plt.subplots()
     ax.xaxis.set_major_formatter(f_x)
     
     
-    ax.set_title('AoI em diversos Coding Rates', fontsize=8, fontweight='bold')
-
+    
 
     ax.plot(nNodes, (nNodes*(AoI_case2))/1000000, linestyle=estilos[0], color=cores[0], marker=marcadores[0], 
              markersize=1, markevery=2, label='1/2 C.R.')

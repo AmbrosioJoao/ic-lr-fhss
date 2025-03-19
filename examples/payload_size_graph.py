@@ -160,9 +160,10 @@ with plt.style.context(['science', 'ieee', 'no-latex']):
     ax.autoscale(tight=True)
     ax.set(**pparam)
     ax.set_ylim(bottom=0)  # Ajuste conforme necessário
-
+    plt.gca().xaxis.set_major_formatter(EngFormatter(unit='', places=0))
+    plt.gca().yaxis.set_major_formatter(EngFormatter(unit='', places=0))
     # Título com um tamanho maior
-    ax.set_title('Goodput variando Payload Size (1/3 C.R.)', fontsize=12, fontweight='bold')
+   # ax.set_title('Goodput variando Payload Size (1/3 C.R.)', fontsize=12, fontweight='bold')
 
     plt.tight_layout()
     plt.show()
