@@ -59,6 +59,10 @@ plt.bar(courses, valores_toa , color ='green', width = 700)
 
 plt.xlabel("Dispositivos")
 plt.ylabel("ToA")
+<<<<<<< HEAD
+=======
+
+>>>>>>> d2fe895b6f91b63df478f2bda51d2f6d4a83570b
 
 
 
