@@ -134,10 +134,14 @@ with plt.style.context(['science', 'ieee', 'no-latex']):
     ax.xaxis.set_major_formatter(f_x)
     
     
-    ax.plot(8*nNodes, goodput_case2, linestyle=estilos[0], color=cores[0], marker=marcadores[0], 
-            markersize=4, markevery=4, label='1/2 C.R.')
+    
     ax.plot(8*nNodes, goodput_case1, linestyle=estilos[1], color=cores[1], marker=marcadores[1], 
             markersize=4, markevery=4, label='1/3 C.R.')
+    
+    
+    ax.plot(8*nNodes, goodput_case2, linestyle=estilos[0], color=cores[0], marker=marcadores[0], 
+            markersize=4, markevery=4, label='1/2 C.R.')
+
     
     ax.plot(8*nNodes, goodput_case3 , linestyle=estilos[2], color=cores[2], marker=marcadores[2], 
             markersize=4, markevery=4, label='2/3 C.R.')

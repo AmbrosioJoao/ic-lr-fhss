@@ -38,9 +38,10 @@ marcadores = ['o', 's', '^', 'd', 'x']  # Diferentes tipos de marcadores
 #Number of different number of nodes points (each simulation takes one different)
 nNodes_points = 20
 #Mininum amount of nodes
-nNodes_min = 1000
+nNodes_min = 32 # 8*4 P.S
+
 #Maximum amount of nodes
-nNodes_max = 15000
+nNodes_max = 160 #8*20 P.S
 #Number of nodes is divided by 8, as we are simulating one of the 8 grid.
 #As they are random selected, it is a very good approximation to consider one of them only, and it decreases the simulation time.
 #In the end, we multiply this array by 8 if we want to consider the technology total capacity.
@@ -70,7 +71,7 @@ AoI_case4 = []
 #For each number of nodes point, run the simulation "loops" times
 for n in nNodes:
     #For each nNodes, create a new settings object with the proper input parameter
-    s = Settings(number_nodes = n, code = '1/3')
+    s = Settings(number_nodes = 160000//8, code = '1/3', payload_size= n)
     #This line runs the simulation loops in paralel, using n_jobs as the number of threads generated.
     #Consider using a number according to the amount of reseources available to your machine to avoid crashing your system.
     results_1 = Parallel(n_jobs=8) (delayed(run_sim)(s, seed = seed) for seed in range(0,loops))
@@ -82,7 +83,7 @@ for n in nNodes:
     "***********************************"
  
     #For each nNodes, create a new settings object with the proper input parameter
-    s = Settings(number_nodes = n, code = '1/2')
+    s = Settings(number_nodes = 160000//8, code = '1/2', payload_size= n)
     #This line runs the simulation loops in paralel, using n_jobs as the number of threads generated.
     #Consider using a number according to the amount of reseources available to your machine to avoid crashing your system.
     results_2 = Parallel(n_jobs=8) (delayed(run_sim)(s, seed = seed) for seed in range(0,loops))
@@ -95,7 +96,7 @@ for n in nNodes:
     "***********************************"
  
     #For each nNodes, create a new settings object with the proper input parameter
-    s = Settings(number_nodes = n, code = '2/3')
+    s = Settings(number_nodes = 160000//8, code = '2/3', payload_size= n)
     #This line runs the simulation loops in paralel, using n_jobs as the number of threads generated.
     #Consider using a number according to the amount of reseources available to your machine to avoid crashing your system.
     results_3 = Parallel(n_jobs=8) (delayed(run_sim)(s, seed = seed) for seed in range(0,loops))
@@ -108,7 +109,7 @@ for n in nNodes:
     "***********************************"
  
     #For each nNodes, create a new settings object with the proper input parameter
-    s = Settings(number_nodes = n, code = '5/6')
+    s = Settings(number_nodes = 160000//8, code = '5/6', payload_size= n)
     #This line runs the simulation loops in paralel, using n_jobs as the number of threads generated.
     #Consider using a number according to the amount of reseources available to your machine to avoid crashing your system.
     results_4 = Parallel(n_jobs=8) (delayed(run_sim)(s, seed = seed) for seed in range(0,loops))
@@ -134,22 +135,22 @@ f_x = EngFormatter()
 with plt.style.context(['science', 'ieee', 'no-latex']):
     prop_cycle = plt.rcParams['axes.prop_cycle']
     colors = prop_cycle.by_key()['color']
-    pparam = dict(ylabel='AoI media', xlabel='Numero de dispostivos')
+    pparam = dict(ylabel='AoI media', xlabel='Payload Size')
     fig, ax = plt.subplots()
     ax.xaxis.set_major_formatter(f_x)
     
     
-    ax.plot(nNodes, (nNodes*(AoI_case1))/1000000,linestyle=estilos[1], color=cores[1], marker=marcadores[1], 
-            markersize=1, markevery=2, label='1/3 C.R.')
+    ax.plot(nNodes, nNodes*AoI_case1,linestyle=estilos[1], color=cores[1], marker=marcadores[1], 
+            markersize=1, markevery=2, label='1/3 CR')
 
-    ax.plot(nNodes, (nNodes*(AoI_case2))/1000000, linestyle=estilos[0], color=cores[0], marker=marcadores[0], 
-             markersize=1, markevery=2, label='1/2 C.R.')
+    ax.plot(nNodes, nNodes*AoI_case2 ,linestyle=estilos[0], color=cores[0], marker=marcadores[0], 
+             markersize=1, markevery=2, label='1/2 CR')
 
    
-    ax.plot(nNodes, (nNodes*(AoI_case3))/1000000 , linestyle=estilos[2], color=cores[2], marker=marcadores[2], 
-            markersize=1, markevery=2, label='2/3 C.R.')
-    ax.plot(nNodes, (nNodes*(AoI_case4))/1000000, linestyle=estilos[3], color=cores[3], marker=marcadores[3], 
-            markersize=1, markevery=2, label='5/6 C.R.')    
+    ax.plot(nNodes, nNodes*AoI_case3 , linestyle=estilos[2], color=cores[2], marker=marcadores[2], 
+            markersize=1, markevery=2, label='2/3 CR')
+    ax.plot(nNodes,nNodes*AoI_case4, linestyle=estilos[3], color=cores[3], marker=marcadores[3], 
+            markersize=1, markevery=2, label='5/6 CR')    
     
     leg = ax.legend(loc='upper left', frameon=True, facecolor='white', framealpha=0.8, edgecolor='black')
     ax.grid(ls='--', color='lightgray')
