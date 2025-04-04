@@ -146,7 +146,7 @@ with plt.style.context(['science', 'ieee', 'no-latex']):
    
 
     # Melhorias visuais
-    leg = ax.legend(loc='upper right', frameon=True, facecolor='white', framealpha=0.8, edgecolor='black')
+    leg = ax.legend(loc='lower right', frameon=True, facecolor='white', framealpha=0.8, edgecolor='black')
     ax.grid(ls='--', color='lightgray', alpha=0.6)
     ax.autoscale(tight=True)
     ax.set(**pparam)

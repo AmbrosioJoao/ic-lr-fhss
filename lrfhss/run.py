@@ -22,38 +22,51 @@ def run_sim(settings: Settings, seed=0):
     # after simulation
 
     ######## Cálculo da AoI ########  
-    H_i_num = 0
+    aoi = [] 
     
     for n in nodes: 
-      r_n_1=0
-      s_n_1=0
-      loop=0
-      
-      #H_i_num = 0
-      
-      #A variável 'p' recebe o timestamp final associado ao pacote 'n'
-      for p in n.final_timestamp:
-          
-         # H_i_num = 0
-          if(n.final_timestamp != 0 ):   
-              r_n=p
-              s_n=n.initial_timestamp[loop]
-          ### CALCULA AoI
-              H_i=(r_n-r_n_1)*(r_n_1 - s_n_1) + ((r_n - r_n_1)**2)/2
-              H_i_num += H_i
+        last_reception = 0.0
+        last_generation = 0.0
+        total_area = 0.0
+        loop=0
+        has_success = False  # Check if any packet was received
 
-          if(n.final_timestamp == 0 ):  
-              
-                  H_i = 0
-                  H_i_num += H_i 
-          
-          if r_n>0:
-                  r_n_1=r_n
-                  s_n_1=s_n
-              
-          loop=loop+1
+        for p in n.final_timestamp:
+            #H_i_num = 0
+            if p != 0:  # Successful reception
+                has_success = True
+                current_generation_time = n.initial_timestamp[loop]
 
-    AoI_media = (H_i_num/((settings.simulation_time))/settings.number_nodes) 
+                if last_reception == 0.0:  # First reception
+                    # AoI from 0 to p is a triangle (no prior packets)
+                    time_interval = p - 0
+                    total_area += 0.5 * (time_interval ** 2)
+                else:
+                    # AoI from last_reception_time to p
+                    time_interval = p - last_reception
+                    triangle_area = 0.5 * (time_interval ** 2)
+                    rectangle_height = p - n.initial_timestamp[loop] if last_reception > 0 else 0.0
+                    rectangle_area = rectangle_height * time_interval
+                    total_area += triangle_area + rectangle_area
+                
+                last_reception = p
+                last_generation = current_generation_time
+            loop=loop+1
+
+        if has_success:
+            if p==0: # Cálculo do AoI até o final da simulação se o último pacote não foi decodificado.
+                time_interval = settings.simulation_time - last_reception
+                triangle_area = 0.5 * (time_interval ** 2)
+                rectangle_height = settings.simulation_time - last_generation
+                rectangle_area = rectangle_height * time_interval
+                total_area += triangle_area + rectangle_area
+        else:
+            # Nenhum pacote recebido durante toda simulação : AoI is a triangle from 0 to settings.simulation_time
+            total_area = 0.5 * (settings.simulation_time ** 2)
+
+        aoi.append(total_area/settings.simulation_time)
+
+    AoI_media=np.mean(aoi)
     
     ######## Cálculo da AoI ######## 
 
