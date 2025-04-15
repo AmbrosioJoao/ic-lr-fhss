@@ -104,6 +104,9 @@ class Node():
                 #select the next fragment
                 next_fragment = self.packet.next()
             
+            if self.packet.success == 0:
+                self.final_timestamp.append(0)
+
             #end of transmission procedure
             self.end_of_transmission()
 

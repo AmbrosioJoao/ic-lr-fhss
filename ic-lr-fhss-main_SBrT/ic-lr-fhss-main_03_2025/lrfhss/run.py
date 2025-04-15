@@ -40,14 +40,14 @@ def run_sim(settings: Settings, seed=0):
                 if last_reception == 0.0:  # First reception
                     # AoI from 0 to p is a triangle (no prior packets)
                     time_interval = p - 0
-                    total_area += 0.5 * (time_interval ** 2)
+                    total_area += (0.5 * (time_interval ** 2))/time_interval
                 else:
                     # AoI from last_reception_time to p
                     time_interval = p - last_reception
                     triangle_area = 0.5 * (time_interval ** 2)
-                    rectangle_height = p - n.initial_timestamp[loop] if last_reception > 0 else 0.0
+                    rectangle_height = last_reception - last_generation if last_reception > 0 else 0.0
                     rectangle_area = rectangle_height * time_interval
-                    total_area += triangle_area + rectangle_area
+                    total_area += (triangle_area + rectangle_area)/time_interval
                 
                 last_reception = p
                 last_generation = current_generation_time
@@ -57,12 +57,12 @@ def run_sim(settings: Settings, seed=0):
             if p==0: # Cálculo do AoI até o final da simulação se o último pacote não foi decodificado.
                 time_interval = settings.simulation_time - last_reception
                 triangle_area = 0.5 * (time_interval ** 2)
-                rectangle_height = settings.simulation_time - last_generation
+                rectangle_height = last_reception - last_generation
                 rectangle_area = rectangle_height * time_interval
-                total_area += triangle_area + rectangle_area
+                total_area += (triangle_area + rectangle_area)/time_interval
         else:
             # Nenhum pacote recebido durante toda simulação : AoI is a triangle from 0 to settings.simulation_time
-            total_area = 0.5 * (settings.simulation_time ** 2)
+            total_area = 0.5 * (settings.simulation_time ** 2)/settings.simulation_time
 
         aoi.append(total_area/settings.simulation_time)
 

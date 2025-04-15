@@ -36,17 +36,17 @@ marcadores = ['o', 's', '^', 'd', 'x']  # Diferentes tipos de marcadores
 
 
 #Number of different number of nodes points (each simulation takes one different)
-nNodes_points = 20
+nPayload_points = 8
 #Mininum amount of nodes
-nNodes_min = 1000
+nPayload_min = 10
 #Maximum amount of nodes
-nNodes_max = 200000
+nPayload_max = 58 #
 #Number of nodes is divided by 8, as we are simulating one of the 8 grid.
 #As they are random selected, it is a very good approximation to consider one of them only, and it decreases the simulation time.
 #In the end, we multiply this array by 8 if we want to consider the technology total capacity.
-nNodes = np.linspace(nNodes_min, nNodes_max, nNodes_points, dtype=int)//8
+nPayload = np.linspace(nPayload_min, nPayload_max, nPayload_points, dtype=int)
 #Number of simulation loops for each configuration.
-loops = 1
+loops = 25
 
 start = time.perf_counter()
 success_case1 = []
@@ -65,10 +65,12 @@ success_case4 = []
 goodput_case4 = []
 AoI_case4 = []
 
+
+
 #For each number of nodes point, run the simulation "loops" times
-for n in nNodes:
+for n in nPayload:
     #For each nNodes, create a new settings object with the proper input parameter
-    s = Settings(number_nodes = n, code = '5/6', headers=1)
+    s = Settings(number_nodes = 160000//8, code = '1/3', payload_size= n)
     #This line runs the simulation loops in paralel, using n_jobs as the number of threads generated.
     #Consider using a number according to the amount of reseources available to your machine to avoid crashing your system.
     results_1 = Parallel(n_jobs=8) (delayed(run_sim)(s, seed = seed) for seed in range(0,loops))
@@ -80,7 +82,7 @@ for n in nNodes:
     "***********************************"
  
     #For each nNodes, create a new settings object with the proper input parameter
-    s = Settings(number_nodes = n, code = '2/3', headers=2)
+    s = Settings(number_nodes = 160000//8, code = '1/2', payload_size= n)
     #This line runs the simulation loops in paralel, using n_jobs as the number of threads generated.
     #Consider using a number according to the amount of reseources available to your machine to avoid crashing your system.
     results_2 = Parallel(n_jobs=8) (delayed(run_sim)(s, seed = seed) for seed in range(0,loops))
@@ -93,7 +95,7 @@ for n in nNodes:
     "***********************************"
  
     #For each nNodes, create a new settings object with the proper input parameter
-    s = Settings(number_nodes = n, code = '1/2', headers=2)
+    s = Settings(number_nodes = 160000//8, code = '2/3', payload_size= n)
     #This line runs the simulation loops in paralel, using n_jobs as the number of threads generated.
     #Consider using a number according to the amount of reseources available to your machine to avoid crashing your system.
     results_3 = Parallel(n_jobs=8) (delayed(run_sim)(s, seed = seed) for seed in range(0,loops))
@@ -106,7 +108,7 @@ for n in nNodes:
     "***********************************"
  
     #For each nNodes, create a new settings object with the proper input parameter
-    s = Settings(number_nodes = n, code = '1/3', headers=3)
+    s = Settings(number_nodes = 160000//8, code = '5/6', payload_size= n)
     #This line runs the simulation loops in paralel, using n_jobs as the number of threads generated.
     #Consider using a number according to the amount of reseources available to your machine to avoid crashing your system.
     results_4 = Parallel(n_jobs=8) (delayed(run_sim)(s, seed = seed) for seed in range(0,loops))
@@ -116,7 +118,7 @@ for n in nNodes:
     goodput_case4.append(np.mean(results_4,0)[1])
     AoI_case4.append(np.mean(results_4,0)[3])    
 
-    print(n*8)
+    print(n)
 
 print(f"Case 1: Goodput: {goodput_case1} - AoI: {AoI_case1}")
 print(f"Case 2: Goodput: {goodput_case2} - AoI: {AoI_case2}")
@@ -126,35 +128,33 @@ print(f"Case 4: Goodput: {goodput_case4} - AoI: {AoI_case4}")
 
 print(f"The simulation lasted {time.perf_counter()-start} seconds.")
 
+f_x = EngFormatter()
+
+
 with plt.style.context(['science', 'ieee', 'no-latex']):
-    pparam = dict(ylabel='Goodput', xlabel='Num. Dispositivos')
+    prop_cycle = plt.rcParams['axes.prop_cycle']
+    colors = prop_cycle.by_key()['color']
+    pparam = dict(ylabel='AoI media', xlabel='Payload Size')
     fig, ax = plt.subplots()
-
-    # Adicionando curvas com diferentes estilos e cores, ajustando tamanho e espaçamento dos marcadores
-    ax.plot(nNodes, goodput_case4, linestyle=estilos[0], color=cores[0], marker=marcadores[0], 
-            markersize=4, markevery=4, label='H:3 - CR:1/3')  # Exibe marcador a cada 5 pontos
+    ax.xaxis.set_major_formatter(f_x)
     
-    ax.plot(nNodes, goodput_case3, linestyle=estilos[1], color=cores[1], marker=marcadores[1], 
-            markersize=4, markevery=4, label='H:2 - CR:1/2')
     
-    ax.plot(nNodes, goodput_case2, linestyle=estilos[2], color=cores[2], marker=marcadores[2], 
-            markersize=4, markevery=4, label='H:2 - CR:2/3')
+    ax.plot(nPayload, AoI_case1,linestyle=estilos[1], color=cores[1], marker=marcadores[1], 
+            markersize=1, markevery=2, label='1/3 CR')
+    ax.plot(nPayload, AoI_case2 ,linestyle=estilos[0], color=cores[0], marker=marcadores[0], 
+             markersize=1, markevery=2, label='1/2 CR')
+    ax.plot(nPayload, AoI_case3 , linestyle=estilos[2], color=cores[2], marker=marcadores[2], 
+            markersize=1, markevery=2, label='2/3 CR')
+    ax.plot(nPayload, AoI_case4, linestyle=estilos[3], color=cores[3], marker=marcadores[3], 
+            markersize=1, markevery=2, label='5/6 CR')    
     
-    ax.plot(nNodes, goodput_case1, linestyle=estilos[3], color=cores[3], marker=marcadores[3], 
-            markersize=4, markevery=4, label='H:1 - CR:5/6')
-    
-   
-
-    # Melhorias visuais
-    leg = ax.legend(loc='upper right', frameon=True, facecolor='white', framealpha=0.8, edgecolor='black')
-    ax.grid(ls='--', color='lightgray', alpha=0.6)
+    leg = ax.legend(loc='upper left', frameon=True, facecolor='white', framealpha=0.8, edgecolor='black')
+    ax.grid(ls='--', color='lightgray')
     ax.autoscale(tight=True)
     ax.set(**pparam)
     ax.set_ylim(bottom=0)  # Ajuste conforme necessário
-    plt.gca().xaxis.set_major_formatter(EngFormatter(unit='', places=0))
-    plt.gca().yaxis.set_major_formatter(EngFormatter(unit='', places=0))
-    # Título com um tamanho maior
-  #  ax.set_title('Goodput varying the payload size (Fixed 50k Nodes)', fontsize=12, fontweight='bold')
-
     plt.tight_layout()
     plt.show()
+    plt.close()
+
+
