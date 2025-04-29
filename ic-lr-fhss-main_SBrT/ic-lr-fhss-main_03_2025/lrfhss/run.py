@@ -64,7 +64,7 @@ def run_sim(settings: Settings, seed=0):
             # Nenhum pacote recebido durante toda simulação : AoI is a triangle from 0 to settings.simulation_time
             total_area = 0.5 * (settings.simulation_time ** 2)/settings.simulation_time
 
-        aoi.append(total_area/settings.simulation_time)
+        aoi.append(total_area)
 
     AoI_media=np.mean(aoi)
     
