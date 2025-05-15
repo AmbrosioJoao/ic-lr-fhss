@@ -51,5 +51,5 @@ pip install -e .
 
 - `traffic.py`: defines various traffic generators for `Node` objects.
 - `acrda.py`: alternative `Base` class implementing ACRDA receiver/decoder.
+- Plots were generated using the `SciencePlots`
 
---
