@@ -65,6 +65,19 @@ plot(Goodput3_simulated(1)/3600, AoI3_simulated(1), 'x', 'Color', 'k', 'MarkerSi
 plot(Goodput4_simulated(1)/3600, AoI4_simulated(1), 'x', 'Color', 'k', 'MarkerSize', 10, 'LineWidth', 1.5);
 
 % Adiciona texto explicativo próximo aos pontos iniciais
+text(Goodput1_simulated(1)/3600, AoI1_simulated(1), ' Início: menor N', ...
+    'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'left', 'FontSize', 9);
+
+text(Goodput2_simulated(1)/3600, AoI2_simulated(1), ' Início: menor N', ...
+    'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'left', 'FontSize', 9);
+
+text(Goodput3_simulated(1)/3600, AoI3_simulated(1), ' Início: menor N', ...
+    'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'left', 'FontSize', 9);
+
+text(Goodput4_simulated(1)/3600, AoI4_simulated(1), ' Início: menor N', ...
+    'VerticalAlignment', 'bottom', 'HorizontalAlignment', 'left', 'FontSize', 9);
+
+
 
 
 % Eixo y = Goodput, eixo x = AoI, coerente com a fórmula
