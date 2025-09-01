@@ -23,7 +23,7 @@ def run_sim(settings: Settings, seed=0):
 
     ######## Cálculo da AoI ########  
     aoi = [] 
-    
+    toa = []
     for n in nodes: 
         last_reception = 0.0
         last_generation = 0.0
@@ -65,7 +65,8 @@ def run_sim(settings: Settings, seed=0):
             total_area = 0.5 * (settings.simulation_time ** 2)/settings.simulation_time
 
         aoi.append(total_area)
-
+    toa.append(settings.time_on_air) 
+    toa_value = settings.time_on_air
     AoI_media=np.mean(aoi)
     
     ######## Cálculo da AoI ######## 
@@ -74,11 +75,14 @@ def run_sim(settings: Settings, seed=0):
     transmitted = sum(n.transmitted for n in nodes)
 
     if transmitted == 0: #If no transmissions are made, we consider 100% success as there were no outages
-        return 1
+      #  return ([1], [0], [0], [0], [toa])
+     #  return 1
+     return (1, 0, 0, 0, toa_value)
     else:
         
-        #sucess rate, goodput , transmitidos, aoi media
-        return [[success/transmitted], [success*settings.payload_size], [transmitted], [AoI_media]]
+        #sucess rate, goodput , transmitidos, aoi media, toa
+       #return ([success/transmitted], [success*settings.payload_size], [transmitted], [AoI_media], [toa])
+       return (success / transmitted, success * settings.payload_size, transmitted, AoI_media, toa_value)
 
     #Get the average success per device, used to plot the CDF 
     #success_per_device = [1 if n.transmitted == 0 else bs.packets_received[n.id]/n.transmitted for n in nodes]

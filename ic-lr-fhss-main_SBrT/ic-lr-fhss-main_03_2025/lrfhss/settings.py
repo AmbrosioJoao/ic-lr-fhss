@@ -5,7 +5,7 @@ import inspect
 
 class Settings():
     def __init__(self, number_nodes=80000//8, simulation_time=60*60, payload_size = 10, headers = 2, header_duration = 0.233472, payloads = None, threshold = None, payload_duration = 0.100,
-                 code = '1/3', traffic_class = Exponential_Traffic, traffic_param = {'average_interval': 900}, transceiver_wait = 0.006472, obw = 35, base='core', window_size = 2, window_step = 0.5, node_id = 0):
+                 code = '1/3', traffic_class = Exponential_Traffic, traffic_param = {'average_interval': 900}, transceiver_wait = 0.006472, obw = 35, base='core', window_size = 2, window_step = 0.5, node_id = 0, tx_power = 14, delta = 1):
         
         self.number_nodes = number_nodes
         self.simulation_time = simulation_time
@@ -18,6 +18,8 @@ class Settings():
         self.base = base
         self.window_size = window_size
         self.window_step = window_step
+        self.tx_power = tx_power
+        self.delta = delta
 
         if payloads:
             self.payloads = payloads
