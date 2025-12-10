@@ -8,7 +8,7 @@ def run_sim(settings: Settings, seed=0):
     np.random.seed(seed)
     env = simpy.Environment()
     bs = Base(settings.obw, settings.threshold)
-    
+    energy_efficiency = []
     nodes = []
     
     for i in range(settings.number_nodes):
@@ -25,6 +25,7 @@ def run_sim(settings: Settings, seed=0):
     aoi = [] 
     toa = []
     for n in nodes: 
+        
         last_reception = 0.0
         last_generation = 0.0
         total_area = 0.0
